@@ -59,6 +59,10 @@
 
         <activity android:name=".activity.HotItemActivity"/>
 
+        <activity android:name=".activity.SearchActivity"/>
+
+
+
 
     </application>
 
