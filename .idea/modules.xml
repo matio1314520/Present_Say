@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Present_Say.iml" filepath="$PROJECT_DIR$/Present_Say.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipyLlib/SwipyLlib.iml" filepath="$PROJECT_DIR$/SwipyLlib/SwipyLlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipyRefreshLib/SwipyRefreshLib.iml" filepath="$PROJECT_DIR$/SwipyRefreshLib/SwipyRefreshLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Swipylib/Swipylib.iml" filepath="$PROJECT_DIR$/Swipylib/Swipylib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pulltorefreshlibrary/pulltorefreshlibrary.iml" filepath="$PROJECT_DIR$/pulltorefreshlibrary/pulltorefreshlibrary.iml" />
+    </modules>
+  </component>
+</project>
