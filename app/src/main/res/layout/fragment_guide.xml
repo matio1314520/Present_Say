@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/signin_fragment_guide"
             android:layout_width="22dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:src="@mipmap/btn_signin" />
 
@@ -28,7 +28,7 @@
         <ImageView
             android:id="@+id/search_fragment_guide"
             android:layout_width="22dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="14dp"
             android:src="@mipmap/ic_menu_search" />
@@ -36,7 +36,7 @@
         <ImageView
             android:id="@+id/changenight_fragment_guide"
             android:layout_width="22dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
             android:src="@mipmap/ic_night_on" />
