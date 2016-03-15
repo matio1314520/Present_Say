@@ -31,6 +31,10 @@ public class GuideFragment extends BaseFragment implements xHttpUtils.Callback {
     @ViewInject(R.id.viewpager_fragment_guide)
     private ViewPager mGuideVip;
 
+
+
+
+
     @ViewInject(R.id.tab_fragment_guide)
     private TabLayout mGuideTab;
 
@@ -50,6 +54,9 @@ public class GuideFragment extends BaseFragment implements xHttpUtils.Callback {
     @Override
     public void initData() {
         //nothing
+
+
+
     }
 
     @Override

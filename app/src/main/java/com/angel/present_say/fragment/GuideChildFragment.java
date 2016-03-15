@@ -121,6 +121,7 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
             }
 
             requestNetData();
+
         }
 
         mIsDownToRefresh = true;
@@ -135,19 +136,23 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
     @Override
     public void get(String result) {
 
+
         if (TextUtils.isEmpty(mKeyword)) {
 
             GuideList guideList = JSONObject.parseObject(result, GuideList.class);
 
             if (guideList != null) {
 
+
                 mList.addAll(guideList.getData().getItems());
             }
+
+
         } else {
 
             SearchList search = JSONObject.parseObject(result, SearchList.class);
 
-            if ( search != null){
+            if (search != null) {
 
                 mPostList.addAll(search.getData().getPosts());
             }
