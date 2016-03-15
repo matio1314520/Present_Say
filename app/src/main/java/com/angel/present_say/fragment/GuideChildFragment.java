@@ -14,6 +14,7 @@ import com.angel.present_say.activity.StrategyDetailActivity;
 import com.angel.present_say.adapter.GuideItemAdapter;
 import com.angel.present_say.base.BaseFragment;
 import com.angel.present_say.bean.GuideList;
+import com.angel.present_say.bean.SearchList;
 import com.angel.present_say.common.GuideConstant;
 import com.angel.present_say.utils.xHttpUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -37,6 +38,8 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
 
     private List<GuideList.GuideListData.GuideListItems> mList = new ArrayList();
 
+    private ArrayList<SearchList.DataEntity.PostsEntity> mPostList = new ArrayList<>();
+
     private GuideItemAdapter mAdapter;
 
     private boolean mIsAddHeader;
@@ -45,7 +48,7 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
 
     private boolean mIsDownToRefresh = true; //是否下拉刷新
 
-    public static GuideChildFragment newInstance(int id, boolean isAddHeader,String keyword) {
+    public static GuideChildFragment newInstance(int id, boolean isAddHeader, String keyword) {
 
         Bundle args = new Bundle();
 
@@ -53,7 +56,7 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
 
         args.putBoolean("isAddHeader", isAddHeader);
 
-        args.putString("keyword",keyword);
+        args.putString("keyword", keyword);
 
         GuideChildFragment fragment = new GuideChildFragment();
 
@@ -73,8 +76,8 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
             if (TextUtils.isEmpty(mKeyword)) {
 
                 xHttpUtils.get(GuideConstant.LIST_HEADER_URL + getArguments().getString("id") + GuideConstant.LIST_LAST_URL, this);
-            }else {
-                xHttpUtils.get("http://api.liwushuo.com/v2/search/post?limit=20&offset=0&sort=&keyword="+mKeyword , this);
+            } else {
+                xHttpUtils.get("http://api.liwushuo.com/v2/search/post?limit=20&offset=0&sort=&keyword=" + mKeyword, this);
             }
         }
     }
@@ -83,13 +86,17 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
     public void initData() {
         if (mIsAddHeader) {
             //添加头部
-        mPtrListView.getRefreshableView().addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.container_guide_header, null));
+            mPtrListView.getRefreshableView().addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.container_guide_header, null));
         }
     }
 
     @Override
     public void setAdapter() {
-        mAdapter = new GuideItemAdapter(getActivity(), mList);
+        if (TextUtils.isEmpty(mKeyword)) {
+            mAdapter = new GuideItemAdapter(getActivity(), mList);
+        } else {
+            mAdapter = new GuideItemAdapter(getActivity(), mList, true);
+        }
 
         mPtrListView.setMode(PullToRefreshBase.Mode.BOTH);
 
@@ -114,7 +121,6 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
             }
 
             requestNetData();
-
         }
 
         mIsDownToRefresh = true;
@@ -129,16 +135,27 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
     @Override
     public void get(String result) {
 
-        GuideList guideList = JSONObject.parseObject(result, GuideList.class);
+        if (TextUtils.isEmpty(mKeyword)) {
 
-        if (guideList != null) {
+            GuideList guideList = JSONObject.parseObject(result, GuideList.class);
 
-            mList.addAll(guideList.getData().getItems());
+            if (guideList != null) {
 
-            mAdapter.notifyDataSetChanged();
+                mList.addAll(guideList.getData().getItems());
+            }
+        } else {
 
-            mPtrListView.onRefreshComplete();
+            SearchList search = JSONObject.parseObject(result, SearchList.class);
+
+            if ( search != null){
+
+                mPostList.addAll(search.getData().getPosts());
+            }
         }
+
+        mAdapter.notifyDataSetChanged();
+
+        mPtrListView.onRefreshComplete();
     }
 
     @Event(value = R.id.ptrListview_fragment_childguide, type = AdapterView.OnItemClickListener.class)

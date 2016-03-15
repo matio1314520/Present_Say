@@ -71,6 +71,7 @@ public class SearchChildFragment extends BaseFragment {
         titleList.add("攻略");
 
         mFragmentList.add(GridFragment.newInstance(mKeyword));
+
         mFragmentList.add(GuideChildFragment.newInstance(0, false,mKeyword));
     }
 
