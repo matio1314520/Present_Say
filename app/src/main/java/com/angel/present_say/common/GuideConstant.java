@@ -28,4 +28,8 @@ public class GuideConstant {
     public static final String LIST_HEADER_URL = "http://api.liwushuo.com/v2/channels/";
 
     public static final String LIST_LAST_URL = "/items?limit=20&ad=2&gender=1&offset=0&generation=4";
+
+
+
+    //http://api.liwushuo.com/v2/search/post?limit=20&offset=0&sort=&keyword=%E7%A4%BC%E7%89%A9
 }

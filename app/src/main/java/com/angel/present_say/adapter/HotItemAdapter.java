@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.angel.present_say.R;
 import com.angel.present_say.base.AppBaseAdapter;
+import com.angel.present_say.bean.GridCom;
 import com.angel.present_say.bean.HotGrid;
 
 import org.xutils.view.annotation.ViewInject;
@@ -20,8 +21,16 @@ import java.util.List;
  */
 public class HotItemAdapter extends AppBaseAdapter {
 
+
+    private boolean mYes;
+
     public HotItemAdapter(Context context, List list) {
         super(context, list);
+    }
+
+    public HotItemAdapter(Context context, List list, boolean yes) {
+        this(context, list);
+        this.mYes = yes;
     }
 
     @Override
@@ -35,28 +44,61 @@ public class HotItemAdapter extends AppBaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        HotGrid.HotDataEntity.HotItems.HotData data = (HotGrid.HotDataEntity.HotItems.HotData) mList.get(position);
+        if (mList != null) {
 
-        if (data != null) {
-            viewHolder.priceTxt.setText(data.getPrice());
+            if (mYes) {
 
-            viewHolder.nameTxt.setText(data.getName());
+                GridCom.DataEntity.ItemsEntity data = (GridCom.DataEntity.ItemsEntity) mList.get(position);
 
-            String favorites_count = data.getFavorites_count();
+                if (data != null) {
+                    viewHolder.priceTxt.setText(data.getPrice());
 
-            int fc = Integer.parseInt(favorites_count);
+                    viewHolder.nameTxt.setText(data.getName());
 
-            if (fc < 1000) {
-                viewHolder.loveTxt.setText(favorites_count);
+                    String favorites_count = data.getFavorites_count();
+
+                    int fc = Integer.parseInt(favorites_count);
+
+                    if (fc < 1000) {
+
+                        viewHolder.loveTxt.setText(favorites_count);
+
+                    } else {
+
+                        viewHolder.loveTxt.setText(fc / 100 / 10 + "." + fc / 100 % 10 + "k");
+                    }
+
+                    x.image().bind(viewHolder.iconImg, data.getCover_image_url());
+                }
             } else {
-                viewHolder.loveTxt.setText(fc / 100 / 10 + "." + fc / 100 % 10 + "k");
+
+
+
+                HotGrid.HotDataEntity.HotItems.HotData data = (HotGrid.HotDataEntity.HotItems.HotData) mList.get(position);
+                if (data != null) {
+                    viewHolder.priceTxt.setText(data.getPrice());
+
+                    viewHolder.nameTxt.setText(data.getName());
+
+                    String favorites_count = data.getFavorites_count();
+
+                    int fc = Integer.parseInt(favorites_count);
+
+                    if (fc < 1000) {
+
+                        viewHolder.loveTxt.setText(favorites_count);
+
+                    } else {
+
+                        viewHolder.loveTxt.setText(fc / 100 / 10 + "." + fc / 100 % 10 + "k");
+                    }
+
+                    x.image().bind(viewHolder.iconImg, data.getCover_image_url());
+                }
             }
 
 
-            x.image().bind(viewHolder.iconImg, data.getCover_image_url());
-
         }
-
         return convertView;
     }
 

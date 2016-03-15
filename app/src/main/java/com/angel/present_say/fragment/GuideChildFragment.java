@@ -2,6 +2,7 @@ package com.angel.present_say.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,15 +41,19 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
 
     private boolean mIsAddHeader;
 
+    private String mKeyword;
+
     private boolean mIsDownToRefresh = true; //是否下拉刷新
 
-    public static GuideChildFragment newInstance(int id, boolean isAddHeader) {
+    public static GuideChildFragment newInstance(int id, boolean isAddHeader,String keyword) {
 
         Bundle args = new Bundle();
 
         args.putString("id", String.valueOf(id));
 
         args.putBoolean("isAddHeader", isAddHeader);
+
+        args.putString("keyword",keyword);
 
         GuideChildFragment fragment = new GuideChildFragment();
 
@@ -64,7 +69,13 @@ public class GuideChildFragment extends BaseFragment implements PullToRefreshBas
 
             mIsAddHeader = getArguments().getBoolean("isAddHeader");
 
-            xHttpUtils.get(GuideConstant.LIST_HEADER_URL +  getArguments().getString("id") + GuideConstant.LIST_LAST_URL, this);
+            mKeyword = getArguments().getString("keyword");
+            if (TextUtils.isEmpty(mKeyword)) {
+
+                xHttpUtils.get(GuideConstant.LIST_HEADER_URL + getArguments().getString("id") + GuideConstant.LIST_LAST_URL, this);
+            }else {
+                xHttpUtils.get("http://api.liwushuo.com/v2/search/post?limit=20&offset=0&sort=&keyword="+mKeyword , this);
+            }
         }
     }
 

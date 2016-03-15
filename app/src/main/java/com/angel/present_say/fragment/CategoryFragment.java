@@ -89,7 +89,7 @@ public class CategoryFragment extends BaseFragment implements ViewPager.OnPageCh
     }
 
 
-    @Event(R.id.gift_radiobutton_category)
+    @Event(R.id.search_fragment_guide)
     private void onClick(View view) {
         startActivity(new Intent(getActivity(), SearchActivity.class));
     }

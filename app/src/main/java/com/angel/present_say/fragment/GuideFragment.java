@@ -1,11 +1,14 @@
 package com.angel.present_say.fragment;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.angel.present_say.R;
+import com.angel.present_say.activity.SearchActivity;
 import com.angel.present_say.adapter.GuidePagerAdapter;
 import com.angel.present_say.base.BaseFragment;
 import com.angel.present_say.bean.GuideTab;
@@ -13,6 +16,7 @@ import com.angel.present_say.common.GuideConstant;
 import com.angel.present_say.utils.xHttpUtils;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -74,11 +78,11 @@ public class GuideFragment extends BaseFragment implements xHttpUtils.Callback {
 
                     if (i == 0) {
 
-                        fragmentList.add(GuideChildFragment.newInstance(id, true));
+                        fragmentList.add(GuideChildFragment.newInstance(id, true,null));
 
                     } else {
 
-                        fragmentList.add(GuideChildFragment.newInstance(id, false));
+                        fragmentList.add(GuideChildFragment.newInstance(id, false,null));
                     }
                 }
             }
@@ -89,5 +93,14 @@ public class GuideFragment extends BaseFragment implements xHttpUtils.Callback {
 
         //设置联动
         mGuideTab.setupWithViewPager(mGuideVip);
+    }
+
+
+    @Event({R.id.search_fragment_guide})
+    private void onClick(View view){
+        switch (view.getId()){
+            case R.id.search_fragment_guide:
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+        }
     }
 }

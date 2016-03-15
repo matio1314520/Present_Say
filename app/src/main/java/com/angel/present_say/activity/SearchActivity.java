@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.angel.present_say.R;
 import com.angel.present_say.base.BaseActivity;
+import com.angel.present_say.base.BaseFragment;
 import com.angel.present_say.fragment.SearchChildFragment;
 
 import org.xutils.view.annotation.ContentView;
@@ -18,7 +19,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by Angel on 2016/3/15.
  */
 @ContentView(R.layout.activity_search)
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements BaseFragment.OnFragmentInteractionListener {
 
     @ViewInject(R.id.searchinput_activity_search)
     private EditText mSearchEdt;
@@ -53,5 +54,10 @@ public class SearchActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(String url) {
+
     }
 }
