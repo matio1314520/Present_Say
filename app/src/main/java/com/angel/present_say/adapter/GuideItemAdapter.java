@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.angel.present_say.R;
 import com.angel.present_say.base.AppBaseAdapter;
 import com.angel.present_say.bean.GuideList;
+import com.angel.present_say.bean.SearchList;
 import com.angel.present_say.utils.xHttpUtils;
 
 import org.xutils.view.annotation.ViewInject;
@@ -22,10 +23,16 @@ import java.util.List;
  */
 public class GuideItemAdapter extends AppBaseAdapter {
 
+    private boolean mYes;
 
     public GuideItemAdapter(Context context, List list) {
         super(context, list);
         this.mList = list;
+    }
+
+    public GuideItemAdapter(Context context, List list, boolean yes) {
+        this(context, list);
+        this.mYes = yes;
     }
 
     @Override
@@ -39,18 +46,30 @@ public class GuideItemAdapter extends AppBaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        GuideList.GuideListData.GuideListItems guideListItems = (GuideList.GuideListData.GuideListItems) mList.get(position);
-        if (guideListItems != null) {
+        if (mYes) {
+            SearchList.DataEntity.PostsEntity post = (SearchList.DataEntity.PostsEntity) mList.get(position);
+            if (post != null) {
 
-            if (position != 0 && guideListItems.getCreated_at() == ((GuideList.GuideListData.GuideListItems) mList.get(position - 1)).getCreated_at()) {
-                viewHolder.headerRel.setVisibility(View.GONE);
-            } else {
-                viewHolder.dateTxt.setText("" + guideListItems.getCreated_at());
+                x.image().bind(viewHolder.contentImg, post.getCover_image_url());
+                viewHolder.likeTxt.setText("" + post.getLikes_count());
+                viewHolder.titleTxt.setText(post.getTitle());
             }
-            viewHolder.titleTxt.setText(guideListItems.getTitle());
-            viewHolder.likeTxt.setText("" + guideListItems.getLikes_count());
-            xHttpUtils.getImage(viewHolder.contentImg, guideListItems.getCover_image_url());
+
+        } else {
+            GuideList.GuideListData.GuideListItems guideListItems = (GuideList.GuideListData.GuideListItems) mList.get(position);
+            if (guideListItems != null) {
+
+                if (position != 0 && guideListItems.getCreated_at() == ((GuideList.GuideListData.GuideListItems) mList.get(position - 1)).getCreated_at()) {
+                    viewHolder.headerRel.setVisibility(View.GONE);
+                } else {
+                    viewHolder.dateTxt.setText("" + guideListItems.getCreated_at());
+                }
+                viewHolder.titleTxt.setText(guideListItems.getTitle());
+                viewHolder.likeTxt.setText("" + guideListItems.getLikes_count());
+                xHttpUtils.getImage(viewHolder.contentImg, guideListItems.getCover_image_url());
+            }
         }
+
         return convertView;
     }
 
